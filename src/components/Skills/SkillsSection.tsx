@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Code2, Database, Globe, Cpu, Palette, Terminal } from 'lucide-react';
 import RevealOnScroll from '../common/RevealOnScroll';
+import { addTitleHoverEffect } from '../../utils/titleAnimation';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,8 +41,13 @@ const SkillCategory: React.FC<SkillCategoryProps> = ({ title, skills, icon }) =>
 const SkillsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
+    if (titleRef.current) {
+      addTitleHoverEffect(titleRef.current);
+    }
+
     if (!sectionRef.current || !skillsRef.current) return;
 
     const ctx = gsap.context(() => {
@@ -158,7 +164,7 @@ const SkillsSection = () => {
     <section ref={sectionRef} id="skills" className="py-20">
       <div className="max-w-7xl mx-auto px-6">
         <RevealOnScroll>
-          <h2 className="skills-heading text-4xl font-bold mb-12 text-center font-handwritten">
+          <h2 ref={titleRef} className="skills-heading text-4xl font-bold mb-12 text-center font-handwritten cursor-pointer">
             Skills & Expertise
           </h2>
         </RevealOnScroll>

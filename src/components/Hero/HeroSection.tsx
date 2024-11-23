@@ -6,21 +6,21 @@ import RevealOnScroll from '../common/RevealOnScroll';
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative h-[calc(100vh-64px)]">
+    <section id="home" className="relative min-h-screen">
       <div className="absolute inset-0">
         <GridBackground />
       </div>
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full pointer-events-none">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 w-full">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center min-h-screen pointer-events-none">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 w-full py-20 md:py-0 mt-16 md:mt-0">
           <div className="relative space-y-6 md:space-y-8">
             <RevealOnScroll direction="up" delay={0.2}>
-              <h1 className="font-handwritten text-4xl md:text-5xl font-bold leading-tight pointer-events-none">
+              <h1 className="font-handwritten text-3xl sm:text-4xl md:text-5xl font-bold leading-tight pointer-events-none">
                 Showcase Your Coding Skills with CodeShowcase
               </h1>
             </RevealOnScroll>
             
             <RevealOnScroll direction="up" delay={0.4}>
-              <p className="text-gray-600 text-base md:text-lg font-handwritten pointer-events-none">
+              <p className="text-gray-600 text-sm sm:text-base md:text-lg font-handwritten pointer-events-none">
                 Welcome to CodeShowcase, a platform dedicated to showcasing your coding projects in a minimalist and impressive way.
               </p>
             </RevealOnScroll>

@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Building2, Calendar } from 'lucide-react';
 import RevealOnScroll from '../common/RevealOnScroll';
+import { addTitleHoverEffect } from '../../utils/titleAnimation';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -177,12 +178,15 @@ const experiences = [
   },
 ];
 
-const ExperienceSection = () => {
+const ExperienceSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !timelineRef.current) return;
+    if (titleRef.current) {
+      addTitleHoverEffect(titleRef.current);
+    }
 
     const ctx = gsap.context(() => {
       // Heading animation
@@ -220,7 +224,7 @@ const ExperienceSection = () => {
     <section ref={sectionRef} id="experience" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 w-full">
         <RevealOnScroll>
-          <h2 className="experience-heading text-4xl font-bold mb-12 text-center font-handwritten">
+          <h2 ref={titleRef} className="experience-heading text-4xl font-bold mb-12 text-center font-handwritten cursor-pointer">
             Work Experience
           </h2>
         </RevealOnScroll>
