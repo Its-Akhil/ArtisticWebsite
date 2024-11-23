@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 interface CategoryCardProps {
   icon: React.ReactNode;
@@ -8,16 +9,20 @@ interface CategoryCardProps {
 
 export default function CategoryCard({ icon, title, description }: CategoryCardProps) {
   return (
-    <div className="backdrop-blur-[2px] bg-white/20 border border-white/20 rounded-xl p-6 hover:bg-white/25 transition-all shadow-[2px_2px_10px_rgb(0,0,0,0.03)] hover:shadow-[3px_3px_15px_rgb(0,0,0,0.08)]">
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+    >
       <div className="flex items-start space-x-4">
-        <div className="p-2 bg-white/30 rounded-lg">
+        <div className="p-2 bg-black/5 rounded-lg">
           {icon}
         </div>
         <div>
-          <h3 className="font-handwritten text-lg font-semibold">{title}</h3>
-          <p className="mt-1 text-gray-600 font-handwritten">{description}</p>
+          <h3 className="font-handwritten text-xl font-semibold">{title}</h3>
+          <p className="mt-1 text-gray-600 font-handwritten text-sm">{description}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

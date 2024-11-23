@@ -15,16 +15,19 @@ export default function GridBackground() {
     let targetMouseX = 0;
     let targetMouseY = 0;
 
-    const gridSize = 30; // Smaller grid size for more density
+    const gridSize = 30; 
     const lineLength = 12;
     
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
+      const rect = canvas.parentElement?.getBoundingClientRect();
+      if (!rect) return;
+      
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
-      canvas.style.width = `${canvas.offsetWidth}px`;
-      canvas.style.height = `${canvas.offsetHeight}px`;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
     };
 
     const drawSketchyLine = (x1: number, y1: number, x2: number, y2: number) => {
@@ -43,8 +46,8 @@ export default function GridBackground() {
       if (!ctx || !canvas) return;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = '#94a3b8'; // Slightly darker color
-      ctx.lineWidth = 0.8; // Thicker lines
+      ctx.strokeStyle = '#94a3b8'; 
+      ctx.lineWidth = 0.8; 
 
       const offsetX = (mouseX - canvas.width / 2) * 0.03;
       const offsetY = (mouseY - canvas.height / 2) * 0.03;
@@ -63,7 +66,7 @@ export default function GridBackground() {
           const currentY = y + offsetY * (1 - distanceFactor);
 
           // Draw sketchy cross at each point
-          if (Math.random() > 0.05) { // More frequent crosses
+          if (Math.random() > 0.05) { 
             drawSketchyLine(
               currentX - lineLength + Math.random() * 2,
               currentY + Math.random() * 2,
@@ -125,8 +128,8 @@ export default function GridBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-auto opacity-20"
-      style={{ zIndex: 0 }}
+      className="absolute inset-0 w-full h-full"
+      style={{ touchAction: 'none' }}
     />
   );
 }

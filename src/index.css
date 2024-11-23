@@ -2,7 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
-*{
+* {
     user-select: none;
+}
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    overflow-x: hidden;
+    width: 100%;
 }
