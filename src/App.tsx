@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navigation/Navbar';
 import HeroSection from './components/Hero/HeroSection';
 import ProjectsSection from './components/Projects/ProjectsSection';
@@ -25,27 +25,27 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time (matching the progress bar duration)
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 6500); // Extended duration for longer loading experience
+    }, 6500);
 
     return () => clearTimeout(timer);
   }, []);
 
+  if (isLoading) {
+    return <LoadingScreen isLoading={isLoading} />;
+  }
+
   return (
     <Router>
-      <div className="relative min-h-screen bg-white overflow-hidden">
-        <LoadingScreen isLoading={isLoading} />
-        <div className={isLoading ? 'hidden' : ''}>
-          <Navbar />
-          <main className="relative overflow-hidden">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/profile" element={<ProfileSection />} />
-            </Routes>
-          </main>
-        </div>
+      <div className="relative min-h-screen bg-white">
+        <Navbar />
+        <main className="relative">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/profile" element={<ProfileSection />} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );
