@@ -3,6 +3,7 @@ import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
 import { gsap } from 'gsap';
 import RevealOnScroll from '../common/RevealOnScroll';
 import { addTitleHoverEffect } from '../../utils/titleAnimation';
+import { CONTACT_INFO } from '../../constants/contact';
 
 interface SocialLinkProps {
   href: string;
@@ -187,15 +188,13 @@ export default function ContactSection() {
           </h2>
         </RevealOnScroll>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <RevealOnScroll direction="left" width='100%'>
-            <div className="bg-white rounded-xl p-6 shadow-lg">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="bg-white rounded-xl p-8 shadow-lg">
+              <h3 className="text-3xl font-bold mb-6 font-handwritten">Send a Message</h3>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2 font-handwritten">
                     Name
                   </label>
                   <input
@@ -204,15 +203,13 @@ export default function ContactSection() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:border-transparent transition-all font-handwritten"
+                    placeholder="Your name"
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-shadow"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2 font-handwritten">
                     Email
                   </label>
                   <input
@@ -221,15 +218,13 @@ export default function ContactSection() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:border-transparent transition-all font-handwritten"
+                    placeholder="your.email@example.com"
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-shadow"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2 font-handwritten">
                     Message
                   </label>
                   <textarea
@@ -237,14 +232,15 @@ export default function ContactSection() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    rows={6}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:border-transparent transition-all font-handwritten"
+                    placeholder="Your message here..."
                     required
-                    rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-shadow resize-none"
-                  />
+                  ></textarea>
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors font-handwritten"
+                  className="w-full bg-black text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] font-handwritten"
                 >
                   Send Message
                 </button>
@@ -255,38 +251,35 @@ export default function ContactSection() {
           <RevealOnScroll direction="right">
             <div className="lg:pl-12">
               <div className="bg-white rounded-xl p-6 shadow-lg mb-8">
-                <h3 className="text-xl font-bold mb-4 font-handwritten">
-                  Let's Connect
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  I'm always open to discussing new projects, creative ideas, or
-                  opportunities to be part of your visions.
+                <h3 className="text-3xl font-bold font-handwritten mb-4">Let's Connect</h3>
+                <p className="text-gray-600 max-w-md font-handwritten mb-6">
+                  {CONTACT_INFO.description}
                 </p>
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <SocialLink
-                    href="mailto:your.email@example.com"
+                    href={`mailto:${CONTACT_INFO.email}`}
                     icon={<Mail className="w-5 h-5" />}
-                    label="your.email@example.com"
+                    label={CONTACT_INFO.email}
                   />
                   <SocialLink
-                    href="https://github.com/yourusername"
+                    href={CONTACT_INFO.social.github.url}
                     icon={<Github className="w-5 h-5" />}
-                    label="GitHub"
+                    label={CONTACT_INFO.social.github.label}
                   />
                   <SocialLink
-                    href="https://linkedin.com/in/yourusername"
+                    href={CONTACT_INFO.social.linkedin.url}
                     icon={<Linkedin className="w-5 h-5" />}
-                    label="LinkedIn"
+                    label={CONTACT_INFO.social.linkedin.label}
                   />
                   <SocialLink
-                    href="https://twitter.com/yourusername"
+                    href={CONTACT_INFO.social.twitter.url}
                     icon={<Twitter className="w-5 h-5" />}
-                    label="Twitter"
+                    label={CONTACT_INFO.social.twitter.label}
                   />
                 </div>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-lg">
-                <h3 className="text-xl font-bold mb-4 font-handwritten">
+                <h3 className="text-3xl font-bold font-handwritten">
                   Current Status
                 </h3>
                 <p className="text-gray-600">

@@ -17,3 +17,19 @@ html, body {
     overflow-x: hidden;
     width: 100%;
 }
+
+/* Profile Text Animation */
+@keyframes textReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.text-reveal span {
+  animation: textReveal 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
