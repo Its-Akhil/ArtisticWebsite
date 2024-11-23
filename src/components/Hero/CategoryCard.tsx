@@ -12,7 +12,7 @@ export default function CategoryCard({ icon, title, description }: CategoryCardP
     <motion.div
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+      className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow pointer-events-auto"
     >
       <div className="flex items-start space-x-4">
         <div className="p-2 bg-black/5 rounded-lg">

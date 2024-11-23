@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Code2, Database, Globe, Cpu, Palette, Terminal } from 'lucide-react';
 import RevealOnScroll from '../common/RevealOnScroll';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface SkillCategoryProps {
   title: string;
@@ -33,7 +37,90 @@ const SkillCategory: React.FC<SkillCategoryProps> = ({ title, skills, icon }) =>
   );
 };
 
-export default function SkillsSection() {
+const SkillsSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const skillsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current || !skillsRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Heading animation
+      gsap.from('.skills-heading', {
+        scrollTrigger: {
+          trigger: '.skills-heading',
+          start: 'top bottom-=100',
+          end: 'bottom center',
+          toggleActions: 'play none none reverse'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out'
+      });
+
+      // Skills stagger animation
+      const skillItems = skillsRef.current.children;
+      gsap.from(skillItems, {
+        scrollTrigger: {
+          trigger: skillsRef.current,
+          start: 'top bottom-=100',
+          end: 'bottom center',
+          toggleActions: 'play none none reverse'
+        },
+        x: -50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out'
+      });
+
+      // Progress bar animations
+      const progressBars = document.querySelectorAll('.skill-progress-fill');
+      progressBars.forEach((bar) => {
+        const level = bar.getAttribute('data-level');
+        gsap.fromTo(bar,
+          { width: '0%' },
+          {
+            width: `${level}%`,
+            duration: 1.5,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: bar,
+              start: 'top bottom-=100',
+              end: 'bottom center',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      // Hover animations
+      const skillCards = document.querySelectorAll('.skill-card');
+      skillCards.forEach((card) => {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, {
+            y: -5,
+            scale: 1.02,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, {
+            y: 0,
+            scale: 1,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const skillCategories = [
     {
       title: 'Frontend Development',
@@ -68,14 +155,14 @@ export default function SkillsSection() {
   ];
 
   return (
-    <section id="skills" className="py-20">
+    <section ref={sectionRef} id="skills" className="py-20">
       <div className="max-w-7xl mx-auto px-6">
         <RevealOnScroll>
-          <h2 className="text-4xl font-bold mb-12 text-center font-handwritten">
+          <h2 className="skills-heading text-4xl font-bold mb-12 text-center font-handwritten">
             Skills & Expertise
           </h2>
         </RevealOnScroll>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={skillsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skillCategories.map((category, index) => (
             <RevealOnScroll key={category.title} delay={0.2 * (index + 1)} direction="up">
               <SkillCategory {...category} />
@@ -85,4 +172,6 @@ export default function SkillsSection() {
       </div>
     </section>
   );
-}
+};
+
+export default SkillsSection;
