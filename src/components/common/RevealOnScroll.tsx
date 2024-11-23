@@ -1,24 +1,22 @@
-import React, { useEffect } from 'react';
-import { motion, useAnimation, useInView } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView, useAnimation } from 'framer-motion';
 
-interface RevealProps {
+interface RevealOnScrollProps {
   children: React.ReactNode;
-  width?: "fit-content" | "100%";
   direction?: 'up' | 'down' | 'left' | 'right';
   delay?: number;
-  duration?: number;
   className?: string;
+  width?: 'full' | 'auto';
 }
 
-export default function RevealOnScroll({ 
-  children, 
-  width = "100%",
+export default function RevealOnScroll({
+  children,
   direction = 'up',
   delay = 0,
-  duration = 0.5,
-  className = ""
-}: RevealProps) {
-  const ref = React.useRef(null);
+  className = '',
+  width = 'auto'
+}: RevealOnScrollProps) {
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const controls = useAnimation();
 
@@ -54,19 +52,19 @@ export default function RevealOnScroll({
     if (isInView) {
       controls.start(getFinalPosition());
     }
-  }, [isInView, controls]);
+  }, [isInView, controls, direction]);
 
   return (
-    <div ref={ref} style={{ width }} className={className}>
+    <div ref={ref} className={`w-${width} ${className}`}>
       <motion.div
         initial={getInitialPosition()}
         animate={controls}
         transition={{
-          duration: duration,
+          duration: 0.5,
           delay: delay,
           ease: [0.25, 0.1, 0.25, 1],
         }}
-        className="h-full"
+        className="h-full w-full"
       >
         {children}
       </motion.div>

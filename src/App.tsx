@@ -11,13 +11,13 @@ import LoadingScreen from './components/common/LoadingScreen';
 
 function HomePage() {
   return (
-    <>
+    <div className="min-h-screen">
       <HeroSection />
       <ProjectsSection />
       <SkillsSection />
       <ExperienceSection />
       <ContactSection />
-    </>
+    </div>
   );
 }
 
@@ -38,9 +38,9 @@ function App() {
 
   return (
     <Router>
-      <div className="relative min-h-screen bg-white">
+      <div className="relative bg-white">
         <Navbar />
-        <main className="relative">
+        <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/profile" element={<ProfileSection />} />
